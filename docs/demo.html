@@ -534,6 +534,8 @@ const STAGES = [
 const AUTOMATIONS = [
   {id:"wa",    on:true,  name:"WhatsApp order updates",   price:"₹4,500", d:"Message the customer automatically at every stage change."},
   {id:"proof", on:true,  name:"Proof approval loop",      price:"₹5,500", d:"Customer approves a mockup before anything is printed."},
+  {id:"pincode_block", on:true, name:"Pincode delivery blocker", price:"Included", d:"Automatically block orders to non-serviceable pincodes entered at checkout."},
+  {id:"non_return", on:true, name:"Non-returnable policy manager", price:"Included", d:"Enforce non-returnable policy for specific countries and pincodes."},
   {id:"dpi",   on:true,  name:"Image quality guard",      price:"₹2,500", d:"Warn at upload if the file will print soft at the chosen size."},
   {id:"print", on:true,  name:"Print-ready file output",  price:"₹6,000", d:"Auto-crop, bleed and crop marks straight into the print queue."},
   {id:"awb",   on:true,  name:"Courier tracking sync",    price:"Included", d:"Pull the AWB back from Shiprocket and keep tracking live."},
@@ -1064,8 +1066,8 @@ function viewCheckout(){
   const item=priceOf(p,sz,S.cc);
   const ship=(S.cc==="IN"&&item>=3000)?0:c.ship;
   const e=S.errs;
-  const isZipBlocked = b.zip && S.blockedPincodes.indexOf(b.zip.trim()) >= 0;
-  const isNonReturn = c.nonReturnable || (b.zip && S.nonReturnPincodes.indexOf(b.zip.trim()) >= 0);
+  const isZipBlocked = autoOn("pincode_block") && b.zip && S.blockedPincodes.indexOf(b.zip.trim()) >= 0;
+  const isNonReturn = autoOn("non_return") && (c.nonReturnable || (b.zip && S.nonReturnPincodes.indexOf(b.zip.trim()) >= 0));
 
   const fld=function(k,label,ph,type,full){
     return '<div class="f'+(full?" full":"")+'">'+
