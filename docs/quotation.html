@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
-  <title>Custom Photo Frame Store — Website Proposal &amp; Quotation</title>
-  <meta name="description" content="Two packages, an automation menu and running costs for a custom photo frame e-commerce store.">
+  <title>Custom Photo Frame Store — Website Proposal &amp; Specification</title>
+  <meta name="description" content="Commercial proposal and technical specification for a custom photo frame e-commerce store.">
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ctext%20y%3D%22.9em%22%20font-size%3D%2288%22%3E%F0%9F%96%BC%EF%B8%8F%3C%2Ftext%3E%3C%2Fsvg%3E">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Custom Photo Frame Store — Website Proposal &amp; Quotation">
-  <meta property="og:description" content="Two packages, an automation menu and running costs for a custom photo frame e-commerce store.">
+  <meta property="og:title" content="Custom Photo Frame Store — Website Proposal &amp; Specification">
+  <meta property="og:description" content="Commercial proposal and technical specification for a custom photo frame e-commerce store.">
   <meta name="twitter:card" content="summary">
 </head>
 <body>
@@ -165,10 +165,10 @@ section{padding-top:64px}
 .lane p{font-size:.83rem;color:var(--ink-soft);line-height:1.48}
 
 /* ---------- tiers ---------- */
-.tiers{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));align-items:start}
+.tiers{display:grid;gap:20px;grid-template-columns:1fr;align-items:start}
 .tier{
   position:relative;background:var(--card);border:1px solid var(--rule);border-radius:5px;
-  padding:26px 24px 28px;display:flex;flex-direction:column;gap:18px;box-shadow:var(--shadow);
+  padding:28px 30px 30px;display:flex;flex-direction:column;gap:18px;box-shadow:var(--shadow);
 }
 /* prepress crop ticks */
 .tier::before,.tier::after{
@@ -181,26 +181,23 @@ section{padding-top:64px}
 
 .tier-top{display:flex;flex-direction:column;gap:9px}
 .tier-name{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
-.tier-name h3{font-size:1.32rem}
+.tier-name h3{font-size:1.45rem}
 .badge{
   font-size:.62rem;letter-spacing:.13em;text-transform:uppercase;font-weight:700;
   padding:3px 8px;border-radius:99px;background:var(--cyan);color:var(--card);white-space:nowrap;
 }
 :root[data-theme="dark"] .badge{color:#0E1317}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .badge{color:#0E1317}}
-.tier .who-for{font-size:.86rem;color:var(--ink-soft);line-height:1.5}
-.price{display:flex;align-items:baseline;gap:8px;padding-top:4px}
-.price .amt{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:1.9rem;font-weight:600;letter-spacing:-.03em;line-height:1}
-.price .unit{font-size:.78rem;color:var(--ink-faint)}
-.tier ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
-.tier li{position:relative;padding-left:20px;font-size:.885rem;line-height:1.48}
+.tier .who-for{font-size:.92rem;color:var(--ink-soft);line-height:1.5}
+.tier ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px 24px}
+.tier li{position:relative;padding-left:20px;font-size:.9rem;line-height:1.48}
 .tier li::before{
   content:"";position:absolute;left:0;top:.52em;width:8px;height:8px;border-radius:1px;
   border:1px solid var(--cyan);background:var(--cyan-wash);
 }
 .tier li.plus::before{background:var(--cyan)}
-.tier-foot{margin-top:auto;padding-top:6px;border-top:1px solid var(--rule-soft);
-  display:flex;justify-content:space-between;gap:10px;font-size:.79rem;color:var(--ink-faint)}
+.tier-foot{margin-top:auto;padding-top:14px;border-top:1px solid var(--rule-soft);
+  display:flex;justify-content:space-between;gap:10px;font-size:.82rem;color:var(--ink-faint)}
 
 /* ---------- tables ---------- */
 .tscroll{overflow-x:auto;border:1px solid var(--rule);border-radius:4px;background:var(--card)}
@@ -214,7 +211,7 @@ thead th{
 tbody tr:last-child td{border-bottom:0}
 td.price-cell{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right;font-weight:550}
 th.right{text-align:right}
-.mtx td:not(:first-child){text-align:center;width:104px}
+.mtx td:not(:first-child){text-align:center;width:120px}
 .yes{color:var(--ok);font-weight:700}
 .no{color:var(--ink-faint)}
 .part{color:var(--cyan);font-size:.78rem;font-weight:600}
@@ -273,9 +270,9 @@ footer{margin-top:72px;padding-top:26px;border-top:1px solid var(--rule);
 
 <header class="mast">
   <div class="mast-in">
-    <span class="eyebrow">Website Proposal &amp; Quotation</span>
+    <span class="eyebrow">Website Proposal &amp; Specification</span>
     <h1>Custom Photo Frame Store, Built for Cross-Border Gifting</h1>
-    <p class="lede">A made-to-order photo framing shop online: the customer uploads their photograph, picks a frame, pays, and the workshop gets a print-ready file and a shipping label. Priced in two packages so the shop can start with the recommended tier and grow into the full automation.</p>
+    <p class="lede">A made-to-order photo framing shop online: the customer uploads their photograph, picks a frame, pays, and the workshop gets a print-ready file and a shipping label. Complete custom storefront proposal built for high-margin gifting.</p>
 
     <dl class="meta">
       <div><dt>Prepared for</dt><dd><span class="ph">[Client name]</span></dd></div>
@@ -376,7 +373,7 @@ footer{margin-top:72px;padding-top:26px;border-top:1px solid var(--rule);
       <div class="notecards">
         <div class="note">
           <h4>Export paperwork the shop will need</h4>
-          <p>An IEC (Importer Exporter Code) from DGFT, free to obtain, plus a commercial invoice and packing slip per international parcel. Under the CSB-V courier route, consignments below ₹5,00,000 clear on a simplified declaration. We can generate these documents automatically — see the automation menu.</p>
+          <p>An IEC (Importer Exporter Code) from DGFT, free to obtain, plus a commercial invoice and packing slip per international parcel. Under the CSB-V courier route, commercial consignments clear on a simplified declaration. We can generate these documents automatically — see the automation menu.</p>
         </div>
         <div class="note">
           <h4>Taking money from abroad</h4>
@@ -393,18 +390,17 @@ footer{margin-top:72px;padding-top:26px;border-top:1px solid var(--rule);
   <!-- ================= PACKAGES ================= -->
   <section id="packages">
     <div class="sec-head">
-      <span class="eyebrow">Packages</span>
-      <h2>Two levels, priced for value and scale</h2>
-      <p>Each package is complete on its own — nothing is left half-finished to force an upgrade. Automations from the menu further down can be attached to either of them.</p>
+      <span class="eyebrow">Project Deliverables</span>
+      <h2>Complete Custom Store Proposal</h2>
+      <p>A complete made-to-order photo framing storefront with cross-border pricing, automated order fulfilment, customer tracking, and admin controls.</p>
     </div>
 
     <div class="tiers">
 
       <article class="tier pick">
         <div class="tier-top">
-          <div class="tier-name"><h3>Frame</h3><span class="badge">Recommended</span></div>
-          <p class="who-for">The full cross-border store. Multi-currency, online payment, customer-facing tracking and the SEO to get found.</p>
-          <div class="price"><span class="amt">₹42,000</span><span class="unit">one-time</span></div>
+          <div class="tier-name"><h3>Frame &amp; Co Storefront</h3><span class="badge">Included Scope</span></div>
+          <p class="who-for">The full cross-border store. Multi-currency, online payment, customer-facing tracking, admin controls, and SEO foundation.</p>
         </div>
         <ul>
           <li>Up to 6 pages — home, catalogue, product, upload &amp; order, about, contact</li>
@@ -429,83 +425,54 @@ footer{margin-top:72px;padding-top:26px;border-top:1px solid var(--rule);
           <li>Google Business Profile and Google Analytics configured</li>
           <li>Coupon codes and a simple discount rule</li>
         </ul>
-        <div class="tier-foot"><span>6 weeks</span><span>Best value per rupee</span></div>
-      </article>
-
-      <article class="tier">
-        <div class="tier-top">
-          <div class="tier-name"><h3>Gallery</h3></div>
-          <p class="who-for">A store that mostly runs itself. International payments, proof approvals and the core automation suite included.</p>
-          <div class="price"><span class="amt">₹60,000</span><span class="unit">one-time</span></div>
-        </div>
-        <ul>
-          <li class="plus">Everything in Frame, plus:</li>
-          <li>International payments — Razorpay International or PayPal</li>
-          <li>WhatsApp order confirmation and status updates</li>
-          <li>Proof approval loop before printing begins</li>
-          <li>Automatic print-ready file generation with bleed and crop</li>
-          <li>Auto commercial invoice and packing slip for exports</li>
-          <li>Customer accounts with reorder from order history</li>
-          <li>Owner dashboard — revenue, orders by country, top products</li>
-          <li>Product reviews with photos, plus automated review requests</li>
-        </ul>
-        <div class="tier-foot"><span>8 weeks</span><span>Includes 5 automations</span></div>
+        <div class="tier-foot"><span>6 weeks estimated build</span><span>Full Store Solution</span></div>
       </article>
 
     </div>
-
-    <p class="small muted" style="margin-top:18px">All figures are in Indian Rupees. <strong>No GST is charged on this quotation</strong> — the amount quoted is the amount payable, with nothing added at invoice. Third-party running costs are listed separately below and are paid by the shop directly to each vendor.</p>
   </section>
 
   <!-- ================= MATRIX ================= -->
   <section id="matrix">
     <div class="sec-head">
-      <span class="eyebrow">Side by side</span>
-      <h2>Feature comparison</h2>
+      <span class="eyebrow">Storefront Capabilities</span>
+      <h2>Full Capability Checklist</h2>
     </div>
 
     <div class="tscroll">
       <table class="mtx">
-        <caption>● included &nbsp;·&nbsp; add-on = available at the price in the menu below &nbsp;·&nbsp; — not included</caption>
+        <caption>● Included in Project Scope</caption>
         <thead>
-          <tr><th scope="col">Capability</th><th scope="col">Frame</th><th scope="col">Gallery</th></tr>
+          <tr><th scope="col">Capability</th><th scope="col" style="text-align:center">Included Status</th></tr>
         </thead>
         <tbody>
-          <tr class="grp"><td colspan="3">Storefront</td></tr>
-          <tr><td class="row-title">Responsive catalogue and product pages</td><td class="yes">●</td><td class="yes">●</td></tr>
-          <tr><td class="row-title">Photo upload with crop and live frame preview</td><td class="yes">●</td><td class="yes">●</td></tr>
-          <tr><td class="row-title">Image quality guard <span class="row-sub">Warns the customer before ordering if the file will print blurry</span></td><td class="part">add-on</td><td class="yes">●</td></tr>
-          <tr><td class="row-title">Customer accounts and reorder</td><td class="part">add-on</td><td class="yes">●</td></tr>
-          <tr><td class="row-title">Reviews with customer photos</td><td class="part">add-on</td><td class="yes">●</td></tr>
+          <tr class="grp"><td colspan="2">Storefront</td></tr>
+          <tr><td class="row-title">Responsive catalogue and product pages</td><td class="yes">●</td></tr>
+          <tr><td class="row-title">Photo upload with crop and live frame preview</td><td class="yes">●</td></tr>
+          <tr><td class="row-title">Image quality guard <span class="row-sub">Warns the customer before ordering if the file will print blurry</span></td><td class="yes">●</td></tr>
 
-          <tr class="grp"><td colspan="3">Cross-border &amp; Shipping Controls</td></tr>
-          <tr><td class="row-title">Per-country price table</td><td class="yes">●</td><td class="yes">●</td></tr>
-          <tr><td class="row-title">Currency switcher</td><td class="yes">●</td><td class="yes">●</td></tr>
-          <tr><td class="row-title">Shipping zones and per-zone rates</td><td class="yes">●</td><td class="yes">●</td></tr>
-          <tr><td class="row-title">Pincode delivery blocker <span class="row-sub">Block non-serviceable pincodes directly from admin</span></td><td class="yes">●</td><td class="yes">●</td></tr>
-          <tr><td class="row-title">Non-returnable policy manager <span class="row-sub">Mark specific countries or pincodes as non-returnable in admin</span></td><td class="yes">●</td><td class="yes">●</td></tr>
-          <tr><td class="row-title">Country enable / disable switch <span class="row-sub">How Pakistan stays configured but closed</span></td><td class="yes">●</td><td class="yes">●</td></tr>
-          <tr><td class="row-title">Export invoice and packing slip generation</td><td class="part">add-on</td><td class="yes">●</td></tr>
+          <tr class="grp"><td colspan="2">Cross-border &amp; Shipping Controls</td></tr>
+          <tr><td class="row-title">Per-country price table</td><td class="yes">●</td></tr>
+          <tr><td class="row-title">Currency switcher</td><td class="yes">●</td></tr>
+          <tr><td class="row-title">Shipping zones and per-zone rates</td><td class="yes">●</td></tr>
+          <tr><td class="row-title">Pincode delivery blocker <span class="row-sub">Block non-serviceable pincodes directly from admin</span></td><td class="yes">●</td></tr>
+          <tr><td class="row-title">Non-returnable policy manager <span class="row-sub">Mark specific countries or pincodes as non-returnable in admin</span></td><td class="yes">●</td></tr>
+          <tr><td class="row-title">Country enable / disable switch <span class="row-sub">How Pakistan stays configured but closed</span></td><td class="yes">●</td></tr>
 
-          <tr class="grp"><td colspan="3">Payments</td></tr>
-          <tr><td class="row-title">Manual payment — UPI QR or bank transfer</td><td class="yes">●</td><td class="yes">●</td></tr>
-          <tr><td class="row-title">Razorpay domestic checkout</td><td class="yes">●</td><td class="yes">●</td></tr>
-          <tr><td class="row-title">International card payments</td><td class="part">add-on</td><td class="yes">●</td></tr>
-          <tr><td class="row-title">Coupons and discount rules</td><td class="yes">●</td><td class="yes">●</td></tr>
+          <tr class="grp"><td colspan="2">Payments</td></tr>
+          <tr><td class="row-title">Manual payment — UPI QR or bank transfer</td><td class="yes">●</td></tr>
+          <tr><td class="row-title">Razorpay domestic checkout</td><td class="yes">●</td></tr>
+          <tr><td class="row-title">Coupons and discount rules</td><td class="yes">●</td></tr>
 
-          <tr class="grp"><td colspan="3">Fulfilment</td></tr>
-          <tr><td class="row-title">Admin order list with full-res file download</td><td class="yes">●</td><td class="yes">●</td></tr>
-          <tr><td class="row-title">Six-stage production pipeline</td><td class="yes">●</td><td class="yes">●</td></tr>
-          <tr><td class="row-title">Customer tracking page</td><td class="yes">●</td><td class="yes">●</td></tr>
-          <tr><td class="row-title">Courier API sync — AWB and live tracking</td><td class="yes">●</td><td class="yes">●</td></tr>
-          <tr><td class="row-title">Print-ready file auto-generation</td><td class="part">add-on</td><td class="yes">●</td></tr>
+          <tr class="grp"><td colspan="2">Fulfilment</td></tr>
+          <tr><td class="row-title">Admin order list with full-res file download</td><td class="yes">●</td></tr>
+          <tr><td class="row-title">Six-stage production pipeline</td><td class="yes">●</td></tr>
+          <tr><td class="row-title">Customer tracking page</td><td class="yes">●</td></tr>
+          <tr><td class="row-title">Courier API sync — AWB and live tracking</td><td class="yes">●</td></tr>
 
-          <tr class="grp"><td colspan="3">Growth</td></tr>
-          <tr><td class="row-title">SEO foundation and speed pass</td><td class="yes">●</td><td class="yes">●</td></tr>
-          <tr><td class="row-title">Google Business Profile and Analytics</td><td class="yes">●</td><td class="yes">●</td></tr>
-          <tr><td class="row-title">WhatsApp notifications</td><td class="part">add-on</td><td class="yes">●</td></tr>
-          <tr><td class="row-title">Owner dashboard with revenue by country</td><td class="no">—</td><td class="yes">●</td></tr>
-          <tr><td class="row-title">Blog / content pages</td><td class="part">add-on</td><td class="part">add-on</td></tr>
+          <tr class="grp"><td colspan="2">Growth</td></tr>
+          <tr><td class="row-title">SEO foundation and speed pass</td><td class="yes">●</td></tr>
+          <tr><td class="row-title">Google Business Profile and Analytics</td><td class="yes">●</td></tr>
+          <tr><td class="row-title">WhatsApp notifications</td><td class="yes">●</td></tr>
         </tbody>
       </table>
     </div>
@@ -514,104 +481,104 @@ footer{margin-top:72px;padding-top:26px;border-top:1px solid var(--rule);
   <!-- ================= AUTOMATION MENU ================= -->
   <section id="automation">
     <div class="sec-head">
-      <span class="eyebrow">Automation menu</span>
+      <span class="eyebrow">Automation Suite</span>
       <h2>Work the shop stops doing by hand</h2>
-      <p>Each of these replaces a repeated manual task. They can be bought individually on top of any package, and the ones marked <em>included in Gallery</em> come free with that tier. Priced by what they cost to build, not by what they save — several of them pay for themselves within a month.</p>
+      <p>Integrated automations that replace repeated manual tasks, freeing up workshop time and keeping customers informed automatically.</p>
     </div>
 
     <div class="tscroll">
       <table>
-        <caption>Attach any of these to the Frame package. Each automation is priced individually.</caption>
+        <caption>Included automations and workflow enhancements.</caption>
         <thead>
-          <tr><th scope="col">Automation</th><th scope="col">What it removes</th><th scope="col" class="right">Price</th></tr>
+          <tr><th scope="col">Automation</th><th scope="col">What it removes</th><th scope="col" class="right">Status</th></tr>
         </thead>
         <tbody>
           <tr class="grp"><td colspan="3">Talking to the customer</td></tr>
           <tr>
-            <td class="row-title">WhatsApp order updates <span class="row-sub">Included in Gallery</span></td>
+            <td class="row-title">WhatsApp order updates</td>
             <td>Confirmation on order, then an automatic message at every stage — Printing, Framing, Packed, Shipped, Delivered. The single biggest reducer of "where is my order" calls.</td>
-            <td class="price-cell">₹4,500</td>
+            <td class="price-cell">Included</td>
           </tr>
           <tr>
-            <td class="row-title">Proof approval loop <span class="row-sub">Included in Gallery</span></td>
+            <td class="row-title">Proof approval loop</td>
             <td>Shop uploads a mockup of the framed photo; customer approves or rejects on a link before printing starts. Kills reprint losses and "that is not what I wanted" disputes.</td>
-            <td class="price-cell">₹5,500</td>
+            <td class="price-cell">Included</td>
           </tr>
           <tr>
             <td class="row-title">Abandoned order nudge</td>
             <td>Customer uploaded a photo but never paid — one WhatsApp or email reminder after a set delay. Typically recovers a meaningful slice of drop-offs.</td>
-            <td class="price-cell">₹3,000</td>
+            <td class="price-cell">Optional</td>
           </tr>
           <tr>
-            <td class="row-title">Review request after delivery <span class="row-sub">Included in Gallery</span></td>
+            <td class="row-title">Review request after delivery</td>
             <td>Automatic message a few days after delivery asking for a photo review, with a direct Google review link.</td>
-            <td class="price-cell">₹2,500</td>
+            <td class="price-cell">Optional</td>
           </tr>
           <tr>
             <td class="row-title">Occasion reminder</td>
             <td>Captures the occasion date at checkout — anniversary, birthday — and messages the customer a few weeks before it comes round again. Turns a one-time gift buyer into an annual one.</td>
-            <td class="price-cell">₹3,500</td>
+            <td class="price-cell">Optional</td>
           </tr>
 
           <tr class="grp"><td colspan="3">Production</td></tr>
           <tr>
-            <td class="row-title">Print-ready file generation <span class="row-sub">Included in Gallery</span></td>
+            <td class="row-title">Print-ready file generation</td>
             <td>Auto-crops to the exact frame ratio, adds bleed and crop marks, converts to the print profile and drops a ready file in the queue. Removes a manual Photoshop step per order.</td>
-            <td class="price-cell">₹6,000</td>
+            <td class="price-cell">Included</td>
           </tr>
           <tr>
-            <td class="row-title">Image quality guard <span class="row-sub">Included in Gallery</span></td>
+            <td class="row-title">Image quality guard</td>
             <td>Checks resolution against the chosen frame size at upload and warns the customer before they order, instead of the shop discovering it at the printer.</td>
-            <td class="price-cell">₹2,500</td>
+            <td class="price-cell">Included</td>
           </tr>
           <tr>
             <td class="row-title">Production queue board</td>
             <td>A daily batched view of what has to be printed, cut and framed, grouped by size and material, printable as a worksheet.</td>
-            <td class="price-cell">₹5,000</td>
+            <td class="price-cell">Optional</td>
           </tr>
 
           <tr class="grp"><td colspan="3">Shipping and paperwork</td></tr>
           <tr>
-            <td class="row-title">Pincode delivery blocker <span class="row-sub">Included in Frame &amp; Gallery</span></td>
+            <td class="row-title">Pincode delivery blocker</td>
             <td>Automatically checks destination postcode against blocked pincode rules and prevents non-serviceable orders at checkout.</td>
             <td class="price-cell">Included</td>
           </tr>
           <tr>
-            <td class="row-title">Non-returnable policy manager <span class="row-sub">Included in Frame &amp; Gallery</span></td>
+            <td class="row-title">Non-returnable policy manager</td>
             <td>Enforces non-returnable policy for specific countries or fragile pincodes with automated checkout notices.</td>
             <td class="price-cell">Included</td>
           </tr>
           <tr>
-            <td class="row-title">Courier tracking sync <span class="row-sub">Included in every package</span></td>
+            <td class="row-title">Courier tracking sync</td>
             <td>Pushes the order to Shiprocket or Delhivery, pulls the AWB back, and keeps the tracking status updated on the site without anyone copying numbers.</td>
             <td class="price-cell">Included</td>
           </tr>
           <tr>
-            <td class="row-title">Export document generation <span class="row-sub">Included in Gallery</span></td>
+            <td class="row-title">Export document generation</td>
             <td>Commercial invoice and packing slip as a filled PDF per international order, with HSN code and declared value. Straight into the courier envelope.</td>
-            <td class="price-cell">₹4,500</td>
+            <td class="price-cell">Optional</td>
           </tr>
           <tr>
             <td class="row-title">Live FX rate refresh</td>
             <td>Pulls daily exchange rates so foreign prices hold their rupee margin. Optional — only worth it if prices are set as a converted figure rather than fixed per country.</td>
-            <td class="price-cell">₹2,000</td>
+            <td class="price-cell">Optional</td>
           </tr>
 
           <tr class="grp"><td colspan="3">Back office</td></tr>
           <tr>
             <td class="row-title">Daily digest to the owner</td>
             <td>One WhatsApp message every morning: orders taken, money collected, parcels to ship today, anything stuck.</td>
-            <td class="price-cell">₹1,500</td>
+            <td class="price-cell">Optional</td>
           </tr>
           <tr>
             <td class="row-title">GST invoice on payment</td>
             <td>Generates and emails a numbered GST invoice the moment payment clears, with a running series the accountant can file from.</td>
-            <td class="price-cell">₹3,000</td>
+            <td class="price-cell">Optional</td>
           </tr>
           <tr>
             <td class="row-title">Accounts export</td>
             <td>Orders synced to a Google Sheet or exported in Tally-compatible CSV on a schedule. Ends the month-end spreadsheet evening.</td>
-            <td class="price-cell">₹2,500</td>
+            <td class="price-cell">Optional</td>
           </tr>
         </tbody>
       </table>
@@ -628,18 +595,18 @@ footer{margin-top:72px;padding-top:26px;border-top:1px solid var(--rule);
     <div class="tscroll">
       <table>
         <thead>
-          <tr><th scope="col">Add-on</th><th scope="col">Detail</th><th scope="col" class="right">Price</th></tr>
+          <tr><th scope="col">Add-on</th><th scope="col">Detail</th><th scope="col" class="right">Status</th></tr>
         </thead>
         <tbody>
-          <tr><td class="row-title">SEO foundation pack</td><td>Keyword research for the framing and gifting niche, on-page optimisation across all pages, structured data, sitemap, Search Console setup, Core Web Vitals pass. Included in Frame and Gallery.</td><td class="price-cell">₹7,500</td></tr>
-          <tr><td class="row-title">Local SEO</td><td>Google Business Profile built out, local citations, review strategy. For walk-in trade in the shop's own city.</td><td class="price-cell">₹3,500</td></tr>
-          <tr><td class="row-title">Razorpay domestic checkout</td><td>Integration, webhooks, refund handling. Included in Frame and Gallery.</td><td class="price-cell">₹4,000</td></tr>
-          <tr><td class="row-title">International payments</td><td>Razorpay International or PayPal, multi-currency capture. Included in Gallery.</td><td class="price-cell">₹5,000</td></tr>
-          <tr><td class="row-title">Second language</td><td>Hindi, or Arabic with full right-to-left layout for the GCC market. Per language.</td><td class="price-cell">₹6,000</td></tr>
-          <tr><td class="row-title">Blog with CMS</td><td>Editable article pages for gifting guides and occasion content — the practical way to rank for long-tail searches.</td><td class="price-cell">₹4,500</td></tr>
-          <tr><td class="row-title">Product catalogue setup</td><td>Up to 25 products loaded with images, variants, descriptions and per-country prices, written and entered by us.</td><td class="price-cell">₹3,000</td></tr>
-          <tr><td class="row-title">Logo and brand kit</td><td>Logo, colour palette, typography and packaging sticker artwork, if the shop has none.</td><td class="price-cell">₹5,000</td></tr>
-          <tr><td class="row-title">Annual maintenance</td><td>Updates, backups, security patches, uptime monitoring and up to 3 hours of small changes a month. Billed monthly or ₹18,000 a year up front.</td><td class="price-cell">₹1,800 / mo</td></tr>
+          <tr><td class="row-title">SEO foundation pack</td><td>Keyword research for the framing and gifting niche, on-page optimisation across all pages, structured data, sitemap, Search Console setup, Core Web Vitals pass. Included in Scope.</td><td class="price-cell">Included</td></tr>
+          <tr><td class="row-title">Local SEO</td><td>Google Business Profile built out, local citations, review strategy. For walk-in trade in the shop's own city.</td><td class="price-cell">Optional</td></tr>
+          <tr><td class="row-title">Razorpay domestic checkout</td><td>Integration, webhooks, refund handling. Included in Scope.</td><td class="price-cell">Included</td></tr>
+          <tr><td class="row-title">International payments</td><td>Razorpay International or PayPal, multi-currency capture.</td><td class="price-cell">Optional</td></tr>
+          <tr><td class="row-title">Second language</td><td>Hindi, or Arabic with full right-to-left layout for the GCC market. Per language.</td><td class="price-cell">Optional</td></tr>
+          <tr><td class="row-title">Blog with CMS</td><td>Editable article pages for gifting guides and occasion content — the practical way to rank for long-tail searches.</td><td class="price-cell">Optional</td></tr>
+          <tr><td class="row-title">Product catalogue setup</td><td>Up to 25 products loaded with images, variants, descriptions and per-country prices, written and entered by us.</td><td class="price-cell">Optional</td></tr>
+          <tr><td class="row-title">Logo and brand kit</td><td>Logo, colour palette, typography and packaging sticker artwork, if the shop has none.</td><td class="price-cell">Optional</td></tr>
+          <tr><td class="row-title">Annual maintenance</td><td>Updates, backups, security patches, uptime monitoring and small changes.</td><td class="price-cell">Optional</td></tr>
         </tbody>
       </table>
     </div>
@@ -648,24 +615,24 @@ footer{margin-top:72px;padding-top:26px;border-top:1px solid var(--rule);
   <!-- ================= RUNNING COSTS ================= -->
   <section id="running">
     <div class="sec-head">
-      <span class="eyebrow">Not our invoice</span>
-      <h2>What the shop pays third parties</h2>
-      <p>These are vendor charges, paid by the shop directly. Listed so the quotation is not mistaken for the total cost of running the store. At launch volumes most of these sit on free tiers.</p>
+      <span class="eyebrow">Third-Party Services</span>
+      <h2>What the shop pays directly to vendors</h2>
+      <p>These are third-party vendor charges paid by the shop directly. Billed separately by service providers.</p>
     </div>
 
     <div class="tscroll">
       <table>
         <thead>
-          <tr><th scope="col">Service</th><th scope="col">Notes</th><th scope="col" class="right">Typical cost</th></tr>
+          <tr><th scope="col">Service</th><th scope="col">Notes</th><th scope="col" class="right">Billing</th></tr>
         </thead>
         <tbody>
-          <tr><td class="row-title">Domain name</td><td>.com or .in, renewed annually.</td><td class="price-cell">₹900 / yr</td></tr>
-          <tr><td class="row-title">Hosting</td><td>Free tier is genuinely sufficient for the first year at low order volume; a paid plan becomes worthwhile as traffic grows.</td><td class="price-cell">₹0–7,000 / yr</td></tr>
-          <tr><td class="row-title">Image storage and delivery</td><td>Customer photographs are large. Free tier covers roughly the first few hundred orders.</td><td class="price-cell">₹0–2,400 / yr</td></tr>
-          <tr><td class="row-title">WhatsApp Business API</td><td>Charged per conversation. Meta currently allows a monthly free allowance of service conversations, which covers a small shop.</td><td class="price-cell">₹0–1,000 / mo</td></tr>
-          <tr><td class="row-title">Payment gateway fees</td><td>Roughly 2% + GST domestic, roughly 3% + GST international. Deducted per transaction, never invoiced.</td><td class="price-cell">per transaction</td></tr>
-          <tr><td class="row-title">Shipping aggregator</td><td>Shiprocket or similar. Free plan available; shipping charges are per parcel and passed to the customer.</td><td class="price-cell">₹0–2,000 / mo</td></tr>
-          <tr><td class="row-title">Transactional email</td><td>Free tier comfortably covers a shop at this scale.</td><td class="price-cell">₹0</td></tr>
+          <tr><td class="row-title">Domain name</td><td>.com or .in, renewed annually.</td><td class="price-cell">Annual vendor fee</td></tr>
+          <tr><td class="row-title">Hosting</td><td>Free tier is genuinely sufficient for the first year at low order volume; a paid plan becomes worthwhile as traffic grows.</td><td class="price-cell">Vendor plan</td></tr>
+          <tr><td class="row-title">Image storage and delivery</td><td>Customer photographs are large. Free tier covers roughly the first few hundred orders.</td><td class="price-cell">Vendor plan</td></tr>
+          <tr><td class="row-title">WhatsApp Business API</td><td>Charged per conversation. Meta currently allows a monthly free allowance of service conversations.</td><td class="price-cell">Per conversation</td></tr>
+          <tr><td class="row-title">Payment gateway fees</td><td>Deducted per transaction directly by gateway provider.</td><td class="price-cell">Per transaction</td></tr>
+          <tr><td class="row-title">Shipping aggregator</td><td>Shiprocket or similar. Free plan available; shipping charges are per parcel and passed to the customer.</td><td class="price-cell">Per parcel</td></tr>
+          <tr><td class="row-title">Transactional email</td><td>Free tier comfortably covers a shop at this scale.</td><td class="price-cell">Free tier</td></tr>
         </tbody>
       </table>
     </div>
@@ -675,8 +642,8 @@ footer{margin-top:72px;padding-top:26px;border-top:1px solid var(--rule);
   <section id="timeline">
     <div class="sec-head">
       <span class="eyebrow">Timeline</span>
-      <h2>How the Frame package runs</h2>
-      <p>Six weeks — around 42 calendar days — from the first payment, assuming feedback comes back within two working days at each approval point. Gallery runs in eight weeks, allowing time for the full automation suite and thorough testing.</p>
+      <h2>Project Build Timeline</h2>
+      <p>Six weeks — around 42 calendar days — from the first milestone, assuming feedback comes back within two working days at each approval point.</p>
     </div>
 
     <div class="timeline">
@@ -696,12 +663,12 @@ footer{margin-top:72px;padding-top:26px;border-top:1px solid var(--rule);
     </div>
 
     <div class="terms">
-      <div class="term"><div><strong>Payment schedule.</strong> 30% when work begins, 40% when the mockups are approved, and the final 30% on go-live. Automations and add-ons are billed with the milestone in which they are built.</div></div>
-      <div class="term"><div><strong>Taxes.</strong> All amounts are in Indian Rupees. No GST is charged on this quotation and nothing is added to the figures shown. Gateway and courier fees the shop pays its own vendors may carry GST, but those are the shop's costs and are listed under third-party charges.</div></div>
-      <div class="term"><div><strong>Validity.</strong> This quotation holds for 30 days from the date shown. Third-party pricing — gateway rates, courier tariffs, API charges — is outside our control and may move.</div></div>
-      <div class="term"><div><strong>Revisions.</strong> Two rounds of design revisions are included at the mockup stage. Further rounds, or changes to a design already signed off, are billed at ₹1,500 per round.</div></div>
+      <div class="term"><div><strong>Payment schedule.</strong> 30% when work begins, 40% when the mockups are approved, and the final 30% on go-live.</div></div>
+      <div class="term"><div><strong>Taxes.</strong> Gateway and courier fees the shop pays its own vendors may carry applicable taxes, which are the shop's costs and are listed under third-party charges.</div></div>
+      <div class="term"><div><strong>Validity.</strong> This proposal specification holds for 30 days from the date shown. Third-party pricing — gateway rates, courier tariffs, API charges — is outside our control and may move.</div></div>
+      <div class="term"><div><strong>Revisions.</strong> Two rounds of design revisions are included at the mockup stage. Further rounds or changes to a signed-off design are quoted separately.</div></div>
       <div class="term"><div><strong>Scope changes.</strong> Anything not written in this document is a change request, quoted separately before any work starts. No surprise line items appear on the final invoice.</div></div>
-      <div class="term"><div><strong>What the client provides.</strong> Product photographs, frame specifications and sizes, the price list per country, business and contact details, and the merchant account credentials for the payment gateway. Delays here move the timeline, not the price.</div></div>
+      <div class="term"><div><strong>What the client provides.</strong> Product photographs, frame specifications and sizes, the price list per country, business and contact details, and the merchant account credentials for the payment gateway. Delays here move the timeline.</div></div>
       <div class="term"><div><strong>Accounts and ownership.</strong> Domain, hosting, gateway, courier and WhatsApp accounts are registered in the client's own name and handed over in full. The code and design are the client's on final payment. We keep no lock-in.</div></div>
       <div class="term"><div><strong>Support after launch.</strong> Thirty days of free bug fixing from go-live. Faults are our cost; new features are not. After that, the maintenance plan is optional and cancellable.</div></div>
       <div class="term"><div><strong>Compliance.</strong> Export documentation, IEC registration, GST filing and customs declarations remain the shop's legal responsibility. We build the tools that produce the paperwork; we do not file it.</div></div>
@@ -711,23 +678,23 @@ footer{margin-top:72px;padding-top:26px;border-top:1px solid var(--rule);
   <!-- ================= RECOMMENDATION ================= -->
   <section id="recommendation">
     <div class="rec">
-      <span class="eyebrow" style="color:inherit;opacity:.82">Our recommendation</span>
-      <h2>Frame, plus three automations</h2>
-      <p>The Frame package is where this business model actually starts functioning — a shop selling into Dubai and the NRI market with per-country pricing, online payment, a tracking page and the SEO to get found. Adding three key automations removes the most time-consuming manual work from day one.</p>
+      <span class="eyebrow" style="color:inherit;opacity:.82">Proposed Store Solution</span>
+      <h2>Complete Made-To-Order Photo Framing Storefront</h2>
+      <p>This proposal delivers a high-margin e-commerce store built for cross-border gifting — complete with per-country pricing, online checkout, customer tracking, pincode delivery blocking, non-returnable policy management, and an automated fulfilment pipeline.</p>
       <ul>
-        <li>Frame package — ₹42,000</li>
-        <li>WhatsApp order updates — ₹4,500</li>
-        <li>Proof approval loop — ₹5,500</li>
-        <li>Print-ready file generation — ₹6,000</li>
+        <li>Full responsive storefront, catalogue, and live photo framing tool</li>
+        <li>Country pricing engine &amp; multi-currency switcher</li>
+        <li>Pincode delivery blocker &amp; non-returnable policy manager</li>
+        <li>Order tracking page &amp; 6-stage shop admin pipeline</li>
+        <li>Integrated WhatsApp order updates, proof loop &amp; print-ready output</li>
       </ul>
-      <p><span class="amt-big">₹58,000</span> &nbsp;<span style="opacity:.8;font-size:.88rem">no GST · roughly 6 weeks</span></p>
-      <p>Alternatively, for the complete hands-off experience: take the <strong>Gallery package at ₹60,000</strong> — it includes all five core automations, international payments, proof approvals, and the owner dashboard. Everything the shop needs to scale without adding staff.</p>
+      <p><span style="opacity:.94;font-size:1.05rem;font-weight:600">6 weeks estimated delivery timeline</span></p>
     </div>
   </section>
 
   <footer>
-    <span>Quotation PF-2608-01 · <span class="ph">[Your studio]</span> · Valid until 11 September 2026</span>
-    <span>All amounts in INR · no GST</span>
+    <span>Proposal PF-2608-01 · <span class="ph">[Your studio]</span> · Valid until 11 September 2026</span>
+    <span>Custom Photo Frame Store Proposal</span>
   </footer>
 
 </div>
