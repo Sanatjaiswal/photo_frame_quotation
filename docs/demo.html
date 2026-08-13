@@ -1263,13 +1263,45 @@ function adminOrders(){
     return "Next Stage →";
   };
 
+  const nextActionAuto = function(o){
+    if(o.stage>=6) return "None";
+    if(o.stage===0) return autoOn("proof") ? "🖼️ Proof Loop + 💬 WA" : "💬 WA: Printing";
+    if(o.stage===1) return autoOn("wa") ? "💬 WA: Printing Started" : "Printing";
+    if(o.stage===2) return autoOn("wa") ? "💬 WA: In Workshop" : "Framing";
+    if(o.stage===3) return autoOn("wa") ? "💬 WA: Packed" : "Packed";
+    if(o.stage===4) return autoOn("awb") ? "🚚 AWB Sync + 💬 WA" : "Shipped";
+    if(o.stage===5) return autoOn("rev") ? "⭐ Review Request + 💬 WA" : "Delivered";
+    return "Notification";
+  };
+
+  const currentStageAuto = function(o){
+    if(o.stage===0) return '<span style="color:var(--ink-faint); font-size:.76rem;">✉️ Order Email</span>';
+    if(o.stage===1) return '<span style="color:'+(autoOn("proof")?'var(--brand)':'var(--ink-faint)')+'; font-size:.76rem; font-weight:600;">🖼️ Proof Approval '+(autoOn("proof")?'⚡ON':'OFF')+'</span>';
+    if(o.stage===2) return '<span style="color:'+(autoOn("wa")?'var(--brand)':'var(--ink-faint)')+'; font-size:.76rem; font-weight:600;">💬 WA Printing '+(autoOn("wa")?'⚡ON':'OFF')+'</span>';
+    if(o.stage===3) return '<span style="color:'+(autoOn("wa")?'var(--brand)':'var(--ink-faint)')+'; font-size:.76rem; font-weight:600;">💬 WA Framing '+(autoOn("wa")?'⚡ON':'OFF')+'</span>';
+    if(o.stage===4) return '<span style="color:'+(autoOn("wa")?'var(--brand)':'var(--ink-faint)')+'; font-size:.76rem; font-weight:600;">💬 WA Packed '+(autoOn("wa")?'⚡ON':'OFF')+'</span>';
+    if(o.stage===5) return '<span style="color:'+(autoOn("awb")?'var(--brand)':'var(--ink-faint)')+'; font-size:.76rem; font-weight:600;">🚚 AWB Sync '+(autoOn("awb")?'⚡ON':'OFF')+'</span>';
+    if(o.stage===6) return '<span style="color:'+(autoOn("rev")?'var(--brand)':'var(--ink-faint)')+'; font-size:.76rem; font-weight:600;">⭐ Review Nudge '+(autoOn("rev")?'⚡ON':'OFF')+'</span>';
+    return '<span style="font-size:.76rem;">None</span>';
+  };
+
   return '<div class="stack gap4" style="margin-bottom:16px">'+
       '<h2>Orders &amp; Fulfilment Pipeline</h2>'+
-      '<p class="sub">Manage order stages from production to delivery. Advancing an order automatically triggers live WhatsApp updates for the customer.</p></div>'+
+      '<p class="sub">Manage order stages from production to delivery. Advancing or jumping stages automatically executes active automations.</p></div>'+
 
-    '<div class="callout c-brass" style="margin-bottom:18px"><span class="ic">💡</span><span>'+
-      '<b>How Order Stages Work:</b> Orders move through 6 stages: <b>1. Received</b> → <b>2. Proofing</b> → <b>3. Printing</b> → <b>4. Framing</b> → <b>5. Packed</b> → <b>6. Shipped</b> → <b>7. Delivered</b>. '+
-      'Click the action button to advance to the specific next step, or select any stage directly from the dropdown.</span></div>'+
+    '<div class="callout c-brass" style="margin-bottom:18px"><span class="ic">⚡</span><span>'+
+      '<b>Automations Integrated:</b> Moving orders via <b>Next Action</b> or <b>Jump to Stage</b> executes live automations (💬 WhatsApp Updates, 🖼️ Proof Approvals, 🚚 AWB Sync, ⭐ Review Requests). '+
+      'Toggle active automations directly using the quick switches below.</span></div>'+
+
+    '<div class="pane" style="margin-bottom:18px; padding:12px 18px; background:var(--surface-2); border:1px solid var(--rule);">'+
+      '<div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap; font-size:.82rem;">'+
+        '<span style="font-weight:700; color:var(--brand-ink); text-transform:uppercase; letter-spacing:.08em; font-size:.72rem;">Quick Automation Controls:</span>'+
+        '<label style="display:flex; align-items:center; gap:6px; cursor:pointer;"><button class="sw" data-toggle-auto="wa" aria-pressed="'+autoOn("wa")+'" style="transform:scale(.85)"></button> 💬 WhatsApp Updates</label>'+
+        '<label style="display:flex; align-items:center; gap:6px; cursor:pointer;"><button class="sw" data-toggle-auto="proof" aria-pressed="'+autoOn("proof")+'" style="transform:scale(.85)"></button> 🖼️ Proof Loop</label>'+
+        '<label style="display:flex; align-items:center; gap:6px; cursor:pointer;"><button class="sw" data-toggle-auto="awb" aria-pressed="'+autoOn("awb")+'" style="transform:scale(.85)"></button> 🚚 AWB Tracking Sync</label>'+
+        '<label style="display:flex; align-items:center; gap:6px; cursor:pointer;"><button class="sw" data-toggle-auto="rev" aria-pressed="'+autoOn("rev")+'" style="transform:scale(.85)"></button> ⭐ Review Requests</label>'+
+      '</div>'+
+    '</div>'+
 
     '<div class="tiles">'+
       '<div class="tile"><span class="k">Open orders</span><span class="v">'+live.length+'</span><span class="d">'+S.orders.length+' total this month</span></div>'+
@@ -1279,10 +1311,10 @@ function adminOrders(){
     '</div>'+
 
     '<div class="pane"><div class="pane-h">'+
-      '<h3>All Orders</h3><span class="note">Click action button or choose status from dropdown</span></div>'+
+      '<h3>All Orders</h3><span class="note">Jump to any stage or click Next Action to trigger live automations</span></div>'+
       '<div class="tscroll"><table class="dt">'+
         '<thead><tr><th>Order</th><th>Customer</th><th>Destination</th><th>Item</th>'+
-          '<th>Pipeline Progress</th><th class="r">Value</th><th class="r">Jump to Stage</th><th class="r">Next Action</th></tr></thead><tbody>'+
+          '<th>Pipeline Progress</th><th>Current Automation</th><th class="r">Value</th><th class="r">Jump to Stage (With Automation)</th><th class="r">Next Action</th></tr></thead><tbody>'+
         S.orders.map(function(o){
           const t=orderTotal(o), done=o.stage>=6;
           const dots = [0,1,2,3,4,5,6].map(function(stIdx){
@@ -1293,6 +1325,18 @@ function adminOrders(){
               (isCurrent ? 'var(--brand)' : (active ? 'var(--ok)' : 'var(--rule)')) + '; border:'+(isCurrent?'1px solid var(--brand-ink)':'none')+'"></span>';
           }).join("");
 
+          const stageAutoOptionLabel = function(idx){
+            const name = STAGES[idx].k;
+            if(idx===0) return (idx+1)+'. '+name+' (✉️ Email)';
+            if(idx===1) return (idx+1)+'. '+name+' (🖼️ Proof Loop '+(autoOn("proof")?'ON':'OFF')+')';
+            if(idx===2) return (idx+1)+'. '+name+' (💬 WA Printing '+(autoOn("wa")?'ON':'OFF')+')';
+            if(idx===3) return (idx+1)+'. '+name+' (💬 WA Framing '+(autoOn("wa")?'ON':'OFF')+')';
+            if(idx===4) return (idx+1)+'. '+name+' (💬 WA Packed '+(autoOn("wa")?'ON':'OFF')+')';
+            if(idx===5) return (idx+1)+'. '+name+' (🚚 AWB Sync '+(autoOn("awb")?'ON':'OFF')+')';
+            if(idx===6) return (idx+1)+'. '+name+' (⭐ Review Nudge '+(autoOn("rev")?'ON':'OFF')+')';
+            return (idx+1)+'. '+name;
+          };
+
           return '<tr>'+
             '<td><span class="oid">'+esc(o.id)+'</span><br><span class="xs faint">'+esc(o.day)+'</span></td>'+
             '<td class="who">'+esc(o.who)+'<small>'+esc(o.city)+'</small></td>'+
@@ -1302,17 +1346,19 @@ function adminOrders(){
               ? '<span class="pill s5"><span class="pdot"></span>Delivered</span>'
               : '<span class="pill s'+o.stage+'"><span class="pdot"></span>'+esc(STAGES[o.stage].k)+'</span>')+
               (o.awb?'<br><span class="xs mono faint">'+esc(o.awb)+'</span>':"")+'</td>'+
+            '<td>'+currentStageAuto(o)+'</td>'+
             '<td class="r mono">'+money(o.cc,t.total)+'</td>'+
             '<td class="r">'+
-              '<select class="inp-s xs" data-set-stage="'+o.id+'" style="padding:3px 6px;">'+
+              '<select class="inp-s xs" data-set-stage="'+o.id+'" style="padding:3px 6px; font-weight:500;">'+
                 STAGES.map(function(st, idx){
-                  return '<option value="'+idx+'"'+(o.stage===idx?' selected':'')+'>'+(idx+1)+'. '+esc(st.k)+'</option>';
+                  return '<option value="'+idx+'"'+(o.stage===idx?' selected':'')+'>'+stageAutoOptionLabel(idx)+'</option>';
                 }).join('')+
               '</select>'+
             '</td>'+
             '<td class="r">'+(done
               ? '<span class="xs faint">Closed</span>'
-              : '<button class="btn btn-s btn-sm" data-adv="'+o.id+'" style="white-space:nowrap;">'+esc(nextActionLabel(o))+'</button>')+'</td>'+
+              : '<button class="btn btn-s btn-sm" data-adv="'+o.id+'" style="white-space:nowrap;">'+esc(nextActionLabel(o))+'</button>'+
+                '<span class="xs faint" style="display:block; margin-top:3px; font-size:.72rem; color:var(--brand); font-weight:600;">⚡ Triggers: '+esc(nextActionAuto(o))+'</span>')+'</td>'+
           '</tr>'}).join("")+
       '</tbody></table></div></div>';
 }
