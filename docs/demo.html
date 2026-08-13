@@ -744,7 +744,7 @@ const SAMPLES=[
 
 const S={
   view:"home",
-  cc:"IN",
+  cc:"MH",
   pid:null,
   size:"12x16",
   photo:null,          // {url,pw,ph,label}
@@ -769,21 +769,21 @@ const esc=function(s){return String(s).replace(/[&<>"']/g,function(c){
 
 const P=function(id){return PRODUCTS.filter(function(p){return p.id===id})[0]};
 const Z=function(id){return SIZES.filter(function(s){return s.id===id})[0]};
-const C=function(cc){return COUNTRIES.filter(function(c){return c.code===cc})[0]};
+const C=function(cc){return COUNTRIES.filter(function(c){return c.code===cc})[0] || COUNTRIES[0]};
 const autoOn=function(id){const a=S.autos.filter(function(x){return x.id===id})[0];return a&&a.on};
 
 /* ------------------------------ pricing ------------------------------ */
 function priceOf(prod,size,cc){
-  const c=C(cc), inr=prod.base*size.mult, local=inr*c.uplift*c.rate;
-  return c.code==="IN" ? Math.round(local/10)*10 : Math.round(local);
+  const c=C(cc), inr=prod.base*size.mult, local=inr*c.uplift;
+  return Math.round(local/10)*10;
 }
 function money(cc,n){
   const c=C(cc);
-  return c.sym+n.toLocaleString(c.code==="IN"?"en-IN":"en-US",{maximumFractionDigits:0});
+  return c.sym+n.toLocaleString("en-IN",{maximumFractionDigits:0});
 }
 function orderTotal(o){
   const c=C(o.cc), item=priceOf(P(o.pid),Z(o.size),o.cc);
-  const ship=(o.cc==="IN"&&item>=3000)?0:c.ship;
+  const ship=(item>=3000)?0:c.ship;
   return {item:item,ship:ship,total:item+ship};
 }
 
