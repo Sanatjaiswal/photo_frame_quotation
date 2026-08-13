@@ -1252,8 +1252,25 @@ function adminOrders(){
   const proof=S.orders.filter(function(o){return o.stage===1}).length;
   const toShip=S.orders.filter(function(o){return o.stage===4}).length;
 
-  return '<div class="stack gap4" style="margin-bottom:20px">'+
-      '<h2>Orders</h2><p class="sub">Advance an order and the customer is notified automatically — if that automation is switched on.</p></div>'+
+  const nextActionLabel = function(o){
+    if(o.stage>=6) return "Closed";
+    if(o.stage===0) return autoOn("proof") ? "Move to Proofing →" : "Start Printing →";
+    if(o.stage===1) return "Approve & Print →";
+    if(o.stage===2) return "Assemble Frame →";
+    if(o.stage===3) return "Pack Order →";
+    if(o.stage===4) return "Ship & Sync AWB →";
+    if(o.stage===5) return "Mark Delivered ✅";
+    return "Next Stage →";
+  };
+
+  return '<div class="stack gap4" style="margin-bottom:16px">'+
+      '<h2>Orders &amp; Fulfilment Pipeline</h2>'+
+      '<p class="sub">Manage order stages from production to delivery. Advancing an order automatically triggers live WhatsApp updates for the customer.</p></div>'+
+
+    '<div class="callout c-brass" style="margin-bottom:18px"><span class="ic">💡</span><span>'+
+      '<b>How Order Stages Work:</b> Orders move through 6 stages: <b>1. Received</b> → <b>2. Proofing</b> → <b>3. Printing</b> → <b>4. Framing</b> → <b>5. Packed</b> → <b>6. Shipped</b> → <b>7. Delivered</b>. '+
+      'Click the action button to advance to the specific next step, or select any stage directly from the dropdown.</span></div>'+
+
     '<div class="tiles">'+
       '<div class="tile"><span class="k">Open orders</span><span class="v">'+live.length+'</span><span class="d">'+S.orders.length+' total this month</span></div>'+
       '<div class="tile"><span class="k">Value this month</span><span class="v">₹'+Math.round(inr).toLocaleString("en-IN")+'</span><span class="d up">▲ 18% on July</span></div>'+
@@ -1262,25 +1279,40 @@ function adminOrders(){
     '</div>'+
 
     '<div class="pane"><div class="pane-h">'+
-      '<h3>All orders</h3><span class="note">Click <b>Advance</b> to move an order to its next stage</span></div>'+
+      '<h3>All Orders</h3><span class="note">Click action button or choose status from dropdown</span></div>'+
       '<div class="tscroll"><table class="dt">'+
         '<thead><tr><th>Order</th><th>Customer</th><th>Destination</th><th>Item</th>'+
-          '<th>Stage</th><th class="r">Value</th><th class="r">Action</th></tr></thead><tbody>'+
+          '<th>Pipeline Progress</th><th class="r">Value</th><th class="r">Jump to Stage</th><th class="r">Next Action</th></tr></thead><tbody>'+
         S.orders.map(function(o){
           const t=orderTotal(o), done=o.stage>=6;
+          const dots = [0,1,2,3,4,5,6].map(function(stIdx){
+            if(stIdx===6) return '';
+            const active = o.stage >= stIdx;
+            const isCurrent = o.stage === stIdx;
+            return '<span title="'+STAGES[stIdx].k+'" style="display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:3px; background:'+
+              (isCurrent ? 'var(--brand)' : (active ? 'var(--ok)' : 'var(--rule)')) + '; border:'+(isCurrent?'1px solid var(--brand-ink)':'none')+'"></span>';
+          }).join("");
+
           return '<tr>'+
             '<td><span class="oid">'+esc(o.id)+'</span><br><span class="xs faint">'+esc(o.day)+'</span></td>'+
             '<td class="who">'+esc(o.who)+'<small>'+esc(o.city)+'</small></td>'+
             '<td><span class="flagx">'+esc(o.cc)+'</span> <span class="xs">'+esc(C(o.cc).name)+'</span></td>'+
             '<td>'+esc(P(o.pid).name)+'<br><span class="xs faint">'+esc(Z(o.size).label)+'</span></td>'+
-            '<td>'+(done
+            '<td><div style="margin-bottom:4px;">'+dots+'</div>'+(done
               ? '<span class="pill s5"><span class="pdot"></span>Delivered</span>'
               : '<span class="pill s'+o.stage+'"><span class="pdot"></span>'+esc(STAGES[o.stage].k)+'</span>')+
               (o.awb?'<br><span class="xs mono faint">'+esc(o.awb)+'</span>':"")+'</td>'+
             '<td class="r mono">'+money(o.cc,t.total)+'</td>'+
+            '<td class="r">'+
+              '<select class="inp-s xs" data-set-stage="'+o.id+'" style="padding:3px 6px;">'+
+                STAGES.map(function(st, idx){
+                  return '<option value="'+idx+'"'+(o.stage===idx?' selected':'')+'>'+(idx+1)+'. '+esc(st.k)+'</option>';
+                }).join('')+
+              '</select>'+
+            '</td>'+
             '<td class="r">'+(done
               ? '<span class="xs faint">Closed</span>'
-              : '<button class="btn btn-s btn-sm" data-adv="'+o.id+'">Advance →</button>')+'</td>'+
+              : '<button class="btn btn-s btn-sm" data-adv="'+o.id+'" style="white-space:nowrap;">'+esc(nextActionLabel(o))+'</button>')+'</td>'+
           '</tr>'}).join("")+
       '</tbody></table></div></div>';
 }
@@ -1520,6 +1552,7 @@ function wire(){
     if(i.dataset.field==="zip") render();
   }});
   $$("[data-adv]").forEach(function(b){b.onclick=function(){advance(b.dataset.adv)}});
+  $$("[data-set-stage]").forEach(function(s){s.onchange=function(){advance(s.dataset.setStage, s.value)}});
 
   $$("[data-price]").forEach(function(i){
     i.onchange=function(){
@@ -1684,14 +1717,20 @@ function act(a){
   }
 }
 
-function advance(id){
+function advance(id, targetStage){
   const o=S.orders.filter(function(x){return x.id===id})[0];
-  if(!o||o.stage>=6) return;
+  if(!o) return;
 
-  // proof stage is skipped entirely if the proof automation is off
-  let next=o.stage+1;
-  if(next===1&&!autoOn("proof")) next=2;
-  o.stage=next;
+  if(targetStage !== undefined){
+    const dest = parseInt(targetStage, 10);
+    if(isNaN(dest) || dest < 0 || dest > 6) return;
+    o.stage = dest;
+  } else {
+    if(o.stage>=6) return;
+    let next=o.stage+1;
+    if(next===1&&!autoOn("proof")) next=2;
+    o.stage=next;
+  }
 
   if(o.stage===5&&!o.awb&&autoOn("awb")){
     o.awb=(o.cc==="IN"?"DL":"ARX")+Math.floor(2000000+Math.random()*7999999);
