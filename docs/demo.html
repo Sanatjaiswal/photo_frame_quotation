@@ -510,15 +510,15 @@ const PRODUCTS = [
 
 // rate = INR -> local currency. uplift = margin applied before conversion.
 const COUNTRIES = [
-  {code:"IN", name:"India",                cur:"INR", sym:"₹",    rate:1,      uplift:1.00, ship:149, days:"3–5 days",   on:true},
-  {code:"AE", name:"United Arab Emirates", cur:"AED", sym:"AED ", rate:0.0435, uplift:1.35, ship:65,  days:"5–7 days",   on:true},
-  {code:"SA", name:"Saudi Arabia",         cur:"SAR", sym:"SAR ", rate:0.0445, uplift:1.35, ship:78,  days:"6–9 days",   on:true},
-  {code:"GB", name:"United Kingdom",       cur:"GBP", sym:"£",    rate:0.0092, uplift:1.55, ship:19,  days:"7–10 days",  on:true},
-  {code:"US", name:"United States",        cur:"USD", sym:"$",    rate:0.0115, uplift:1.65, ship:24,  days:"7–12 days",  on:true},
-  {code:"CA", name:"Canada",               cur:"CAD", sym:"C$",   rate:0.0158, uplift:1.60, ship:32,  days:"8–12 days",  on:true},
-  {code:"AU", name:"Australia",            cur:"AUD", sym:"A$",   rate:0.0177, uplift:1.60, ship:34,  days:"8–12 days",  on:true},
-  {code:"SG", name:"Singapore",            cur:"SGD", sym:"S$",   rate:0.0155, uplift:1.45, ship:22,  days:"6–9 days",   on:true},
-  {code:"PK", name:"Pakistan",             cur:"PKR", sym:"PKR ", rate:3.34,   uplift:1.35, ship:0,   days:"—",          on:false,
+  {code:"IN", name:"India",                cur:"INR", sym:"₹",    rate:1,      uplift:1.00, ship:149, days:"3–5 days",   on:true,  nonReturnable:false},
+  {code:"AE", name:"United Arab Emirates", cur:"AED", sym:"AED ", rate:0.0435, uplift:1.35, ship:65,  days:"5–7 days",   on:true,  nonReturnable:true},
+  {code:"SA", name:"Saudi Arabia",         cur:"SAR", sym:"SAR ", rate:0.0445, uplift:1.35, ship:78,  days:"6–9 days",   on:true,  nonReturnable:true},
+  {code:"GB", name:"United Kingdom",       cur:"GBP", sym:"£",    rate:0.0092, uplift:1.55, ship:19,  days:"7–10 days",  on:true,  nonReturnable:true},
+  {code:"US", name:"United States",        cur:"USD", sym:"$",    rate:0.0115, uplift:1.65, ship:24,  days:"7–12 days",  on:true,  nonReturnable:true},
+  {code:"CA", name:"Canada",               cur:"CAD", sym:"C$",   rate:0.0158, uplift:1.60, ship:32,  days:"8–12 days",  on:true,  nonReturnable:true},
+  {code:"AU", name:"Australia",            cur:"AUD", sym:"A$",   rate:0.0177, uplift:1.60, ship:34,  days:"8–12 days",  on:true,  nonReturnable:true},
+  {code:"SG", name:"Singapore",            cur:"SGD", sym:"S$",   rate:0.0155, uplift:1.45, ship:22,  days:"6–9 days",   on:true,  nonReturnable:true},
+  {code:"PK", name:"Pakistan",             cur:"PKR", sym:"PKR ", rate:3.34,   uplift:1.35, ship:0,   days:"—",          on:false, nonReturnable:true,
    why:"No courier route from India"},
 ];
 
@@ -749,6 +749,8 @@ const S={
   activeOrder:null,
   adminTab:"orders",
   autos:AUTOMATIONS.map(function(a){return{id:a.id,on:a.on}}),
+  blockedPincodes:["190001","700001"],
+  nonReturnPincodes:["400050","110002"],
   errs:{},
   tourOpen:true,
   seq:146,
@@ -1062,6 +1064,9 @@ function viewCheckout(){
   const item=priceOf(p,sz,S.cc);
   const ship=(S.cc==="IN"&&item>=3000)?0:c.ship;
   const e=S.errs;
+  const isZipBlocked = b.zip && S.blockedPincodes.indexOf(b.zip.trim()) >= 0;
+  const isNonReturn = c.nonReturnable || (b.zip && S.nonReturnPincodes.indexOf(b.zip.trim()) >= 0);
+
   const fld=function(k,label,ph,type,full){
     return '<div class="f'+(full?" full":"")+'">'+
       '<label for="f_'+k+'">'+esc(label)+'</label>'+
@@ -1098,6 +1103,12 @@ function viewCheckout(){
           fld("occ","Occasion (optional)","Anniversary — 4 Nov")+
           fld("note","Note for the workshop","Please keep the mount wide")+
         '</div>'+
+
+        (isZipBlocked?'<div class="callout c-bad"><span class="ic">⛔</span><span>'+
+          '<b>Delivery Unavailable.</b> Shipping to pincode <b>'+esc(b.zip.trim())+'</b> is currently blocked in shop admin settings. Please enter a different delivery address.</span></div>':"")+
+
+        (isNonReturn&&!isZipBlocked?'<div class="callout c-brass"><span class="ic">🏷️</span><span>'+
+          '<b>Non-Returnable Item.</b> Custom framing orders to <b>'+esc(c.name)+'</b>'+(b.zip&&S.nonReturnPincodes.indexOf(b.zip.trim())>=0?' / pincode <b>'+esc(b.zip.trim())+'</b>':'')+' are non-returnable as configured in shop admin.</span></div>':"")+
 
         (S.cc!=="IN"?'<div class="callout c-brass"><span class="ic">⇄</span><span>'+
           '<b>International order.</b> We prepay duties and generate the commercial invoice, so nothing is '+
@@ -1136,7 +1147,7 @@ function viewCheckout(){
         '</div>'+
         '<div class="sum-total"><span class="lbl">Total</span>'+
           '<span class="amt">'+money(S.cc,item+ship)+'</span></div>'+
-        '<button class="btn btn-p btn-lg btn-full" data-act="place">Place order</button>'+
+        '<button class="btn btn-p btn-lg btn-full" data-act="place"'+(isZipBlocked?' disabled style="opacity:.5;cursor:not-allowed;" title="Delivery blocked for this pincode"':'')+'>Place order</button>'+
         '<p class="xs faint" style="text-align:center">Prototype — no payment is taken and no card details are collected.</p>'+
       '</aside>'+
     '</div>'+
@@ -1276,9 +1287,8 @@ function adminOrders(){
 
 function adminPricing(){
   return '<div class="stack gap4" style="margin-bottom:20px">'+
-      '<h2>Country pricing</h2>'+
-      '<p class="sub">Change any number here and the storefront updates immediately — no developer, no redeploy. '+
-      'Uplift is the margin applied to the India price before conversion.</p></div>'+
+      '<h2>Country pricing &amp; Pincode rules</h2>'+
+      '<p class="sub">Change rates, toggle country return policies, or block non-serviceable pincodes — updates take effect instantly.</p></div>'+
 
     '<div class="callout c-bad" style="margin-bottom:18px"><span class="ic">!</span><span>'+
       '<b>Pakistan is configured but switched off.</b> India suspended bilateral trade in 2019 and postal exchange '+
@@ -1289,7 +1299,7 @@ function adminPricing(){
       '<span class="note">'+COUNTRIES.filter(function(c){return c.on}).length+' of '+COUNTRIES.length+' enabled</span></div>'+
       '<div class="tscroll"><table class="dt">'+
         '<thead><tr><th>Country</th><th>Currency</th><th class="r">Uplift</th><th class="r">Shipping</th>'+
-          '<th class="r">8×10 sells at</th><th>Transit</th><th class="r">Enabled</th></tr></thead><tbody>'+
+          '<th class="r">8×10 sells at</th><th>Transit</th><th class="r">Non-returnable</th><th class="r">Enabled</th></tr></thead><tbody>'+
         COUNTRIES.map(function(c){
           const eg=priceOf(P("oak"),Z("8x10"),c.code);
           return '<tr'+(c.on?"":' style="opacity:.62"')+'>'+
@@ -1301,12 +1311,51 @@ function adminPricing(){
               'value="'+c.ship+'" data-price="'+c.code+'" data-key="ship"'+(c.on?"":" disabled")+'></td>'+
             '<td class="r mono">'+(c.on?money(c.code,eg):"—")+'</td>'+
             '<td class="xs">'+esc(c.days)+'</td>'+
+            '<td class="r"><button class="sw" data-toggle-nr="'+c.code+'" aria-pressed="'+(c.nonReturnable||false)+'" '+
+              (c.on?'aria-label="Toggle non-returnable for '+esc(c.name)+'"':'disabled')+
+              '></button></td>'+
             '<td class="r"><button class="sw" data-toggle-cc="'+c.code+'" aria-pressed="'+c.on+'" '+
               (c.code==="PK"?'disabled title="No courier route available from India"':'aria-label="Enable '+esc(c.name)+'"')+
               '></button></td>'+
           '</tr>'}).join("")+
       '</tbody></table></div></div>'+
-      '<p class="xs faint" style="margin-top:12px">Prototype note: switching a country off here removes it from the storefront selector. Pakistan is locked off deliberately.</p>';
+
+    '<div class="pane" style="margin-top:24px"><div class="pane-h"><h3>Pincode &amp; Delivery Controls</h3>'+
+      '<span class="note">Block non-serviceable pincodes or set specific pincode return policies</span></div>'+
+      '<div style="padding:20px; display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:24px;">'+
+
+        '<div class="stack gap10">'+
+          '<h4 style="font-size:.95rem">⛔ Pincode Delivery Blocker</h4>'+
+          '<p class="xs faint">Orders entering these pincodes at checkout will see delivery unavailable.</p>'+
+          '<div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; min-height:36px;">'+
+            (S.blockedPincodes.length ? S.blockedPincodes.map(function(z){
+              return '<span style="background:var(--bad-wash); color:var(--bad); border:1px solid var(--bad); padding:3px 8px; border-radius:4px; font-weight:600; font-family:var(--mono); font-size:.82rem; display:inline-flex; align-items:center; gap:6px;">'+
+                esc(z)+' <button data-del-block="'+esc(z)+'" style="background:none; border:0; color:inherit; cursor:pointer; font-weight:700; padding:0; line-height:1;" title="Remove block">✕</button></span>';
+            }).join("") : '<span class="xs faint">No blocked pincodes set</span>')+
+          '</div>'+
+          '<div class="row gap8" style="margin-top:6px">'+
+            '<input id="inpBlockZip" class="inp-s" type="text" placeholder="e.g. 190001" style="width:130px; text-align:left;">'+
+            '<button class="btn btn-s btn-sm" id="btnBlockZip">+ Block Pincode</button>'+
+          '</div>'+
+        '</div>'+
+
+        '<div class="stack gap10">'+
+          '<h4 style="font-size:.95rem">📦 Non-Returnable Pincodes</h4>'+
+          '<p class="xs faint">Mark specific pincodes as non-returnable (e.g. fragile glass/custom items).</p>'+
+          '<div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; min-height:36px;">'+
+            (S.nonReturnPincodes.length ? S.nonReturnPincodes.map(function(z){
+              return '<span style="background:var(--brass-wash); color:var(--brass); border:1px solid var(--brass); padding:3px 8px; border-radius:4px; font-weight:600; font-family:var(--mono); font-size:.82rem; display:inline-flex; align-items:center; gap:6px;">'+
+                esc(z)+' <button data-del-nr="'+esc(z)+'" style="background:none; border:0; color:inherit; cursor:pointer; font-weight:700; padding:0; line-height:1;" title="Remove rule">✕</button></span>';
+            }).join("") : '<span class="xs faint">No non-returnable pincodes set</span>')+
+          '</div>'+
+          '<div class="row gap8" style="margin-top:6px">'+
+            '<input id="inpNrZip" class="inp-s" type="text" placeholder="e.g. 400050" style="width:130px; text-align:left;">'+
+            '<button class="btn btn-s btn-sm" id="btnNrZip">+ Add Rule</button>'+
+          '</div>'+
+        '</div>'+
+
+      '</div></div>'+
+      '<p class="xs faint" style="margin-top:12px">Prototype note: switching a country off or blocking a pincode takes effect instantly in the storefront checkout demo.</p>';
 }
 
 function adminAutos(){
@@ -1466,7 +1515,10 @@ function wire(){
 
   // ---- actions ----
   $$("[data-act]").forEach(function(b){b.onclick=function(){act(b.dataset.act)}});
-  $$("[data-field]").forEach(function(i){i.oninput=function(){S.buyer[i.dataset.field]=i.value}});
+  $$("[data-field]").forEach(function(i){i.oninput=function(){
+    S.buyer[i.dataset.field]=i.value;
+    if(i.dataset.field==="zip") render();
+  }});
   $$("[data-adv]").forEach(function(b){b.onclick=function(){advance(b.dataset.adv)}});
 
   $$("[data-price]").forEach(function(i){
@@ -1481,10 +1533,44 @@ function wire(){
     if(!c.on&&S.cc===c.code) S.cc="IN";
     render();
   }});
+  $$("[data-toggle-nr]").forEach(function(b){b.onclick=function(){
+    const c=C(b.dataset.toggleNr); c.nonReturnable=!c.nonReturnable;
+    render();
+  }});
   $$("[data-toggle-auto]").forEach(function(b){b.onclick=function(){
     const a=S.autos.filter(function(x){return x.id===b.dataset.toggleAuto})[0];
     a.on=!a.on; render();
   }});
+
+  // ---- pincode & non-returnable admin handlers ----
+  $$("[data-del-block]").forEach(function(b){b.onclick=function(){
+    S.blockedPincodes=S.blockedPincodes.filter(function(z){return z!==b.dataset.delBlock});
+    render();
+  }});
+  $$("[data-del-nr]").forEach(function(b){b.onclick=function(){
+    S.nonReturnPincodes=S.nonReturnPincodes.filter(function(z){return z!==b.dataset.delNr});
+    render();
+  }});
+
+  const bBlock=$("#btnBlockZip"), iBlock=$("#inpBlockZip");
+  if(bBlock&&iBlock){
+    bBlock.onclick=function(){
+      const val=iBlock.value.trim();
+      if(val && S.blockedPincodes.indexOf(val)<0){
+        S.blockedPincodes.push(val); render();
+      }
+    };
+  }
+
+  const bNr=$("#btnNrZip"), iNr=$("#inpNrZip");
+  if(bNr&&iNr){
+    bNr.onclick=function(){
+      const val=iNr.value.trim();
+      if(val && S.nonReturnPincodes.indexOf(val)<0){
+        S.nonReturnPincodes.push(val); render();
+      }
+    };
+  }
 }
 
 function updateQuality(){
