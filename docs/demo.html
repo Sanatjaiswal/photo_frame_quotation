@@ -508,18 +508,22 @@ const PRODUCTS = [
    story:"A wide, heavy walnut profile with a deep rabbet. Anchors a large photograph on a plain wall better than anything else in the range."},
 ];
 
-// rate = INR -> local currency. uplift = margin applied before conversion.
+// rate = INR -> local currency. uplift = margin applied per state.
 const COUNTRIES = [
-  {code:"IN", name:"India",                cur:"INR", sym:"₹",    rate:1,      uplift:1.00, ship:149, days:"3–5 days",   on:true,  nonReturnable:false},
-  {code:"AE", name:"United Arab Emirates", cur:"AED", sym:"AED ", rate:0.0435, uplift:1.35, ship:65,  days:"5–7 days",   on:true,  nonReturnable:true},
-  {code:"SA", name:"Saudi Arabia",         cur:"SAR", sym:"SAR ", rate:0.0445, uplift:1.35, ship:78,  days:"6–9 days",   on:true,  nonReturnable:true},
-  {code:"GB", name:"United Kingdom",       cur:"GBP", sym:"£",    rate:0.0092, uplift:1.55, ship:19,  days:"7–10 days",  on:true,  nonReturnable:true},
-  {code:"US", name:"United States",        cur:"USD", sym:"$",    rate:0.0115, uplift:1.65, ship:24,  days:"7–12 days",  on:true,  nonReturnable:true},
-  {code:"CA", name:"Canada",               cur:"CAD", sym:"C$",   rate:0.0158, uplift:1.60, ship:32,  days:"8–12 days",  on:true,  nonReturnable:true},
-  {code:"AU", name:"Australia",            cur:"AUD", sym:"A$",   rate:0.0177, uplift:1.60, ship:34,  days:"8–12 days",  on:true,  nonReturnable:true},
-  {code:"SG", name:"Singapore",            cur:"SGD", sym:"S$",   rate:0.0155, uplift:1.45, ship:22,  days:"6–9 days",   on:true,  nonReturnable:true},
-  {code:"PK", name:"Pakistan",             cur:"PKR", sym:"PKR ", rate:3.34,   uplift:1.35, ship:0,   days:"—",          on:false, nonReturnable:true,
-   why:"No courier route from India"},
+  {code:"MH", name:"Maharashtra",        cur:"INR", sym:"₹", rate:1, uplift:1.00, ship:99,  days:"2–3 days", on:true,  nonReturnable:false},
+  {code:"DL", name:"Delhi NCR",          cur:"INR", sym:"₹", rate:1, uplift:1.00, ship:129, days:"2–4 days", on:true,  nonReturnable:false},
+  {code:"KA", name:"Karnataka",          cur:"INR", sym:"₹", rate:1, uplift:1.00, ship:149, days:"3–4 days", on:true,  nonReturnable:false},
+  {code:"GJ", name:"Gujarat",            cur:"INR", sym:"₹", rate:1, uplift:1.00, ship:119, days:"2–3 days", on:true,  nonReturnable:false},
+  {code:"TN", name:"Tamil Nadu",         cur:"INR", sym:"₹", rate:1, uplift:1.00, ship:149, days:"3–4 days", on:true,  nonReturnable:false},
+  {code:"TS", name:"Telangana",          cur:"INR", sym:"₹", rate:1, uplift:1.00, ship:139, days:"3–4 days", on:true,  nonReturnable:false},
+  {code:"UP", name:"Uttar Pradesh",      cur:"INR", sym:"₹", rate:1, uplift:1.00, ship:149, days:"3–5 days", on:true,  nonReturnable:false},
+  {code:"WB", name:"West Bengal",        cur:"INR", sym:"₹", rate:1, uplift:1.05, ship:179, days:"4–5 days", on:true,  nonReturnable:false},
+  {code:"KL", name:"Kerala",             cur:"INR", sym:"₹", rate:1, uplift:1.00, ship:169, days:"3–5 days", on:true,  nonReturnable:false},
+  {code:"RJ", name:"Rajasthan",          cur:"INR", sym:"₹", rate:1, uplift:1.00, ship:149, days:"3–5 days", on:true,  nonReturnable:false},
+  {code:"JK", name:"Jammu & Kashmir",   cur:"INR", sym:"₹", rate:1, uplift:1.15, ship:249, days:"5–8 days", on:true,  nonReturnable:true},
+  {code:"NE", name:"North East States",  cur:"INR", sym:"₹", rate:1, uplift:1.20, ship:299, days:"6–9 days", on:true,  nonReturnable:true},
+  {code:"LD", name:"Lakshadweep Islands",cur:"INR", sym:"₹", rate:1, uplift:1.25, ship:0,   days:"—",        on:false, nonReturnable:true,
+   why:"No direct courier sea route available"},
 ];
 
 const STAGES = [
@@ -535,7 +539,7 @@ const AUTOMATIONS = [
   {id:"wa",    on:true,  name:"WhatsApp order updates",   price:"₹4,500", d:"Message the customer automatically at every stage change."},
   {id:"proof", on:true,  name:"Proof approval loop",      price:"₹5,500", d:"Customer approves a mockup before anything is printed."},
   {id:"pincode_block", on:true, name:"Pincode delivery blocker", price:"Included", d:"Automatically block orders to non-serviceable pincodes entered at checkout."},
-  {id:"non_return", on:true, name:"Non-returnable policy manager", price:"Included", d:"Enforce non-returnable policy for specific countries and pincodes."},
+  {id:"non_return", on:true, name:"Non-returnable policy manager", price:"Included", d:"Enforce non-returnable policy for specific states and pincodes."},
   {id:"dpi",   on:true,  name:"Image quality guard",      price:"₹2,500", d:"Warn at upload if the file will print soft at the chosen size."},
   {id:"print", on:true,  name:"Print-ready file output",  price:"₹6,000", d:"Auto-crop, bleed and crop marks straight into the print queue."},
   {id:"awb",   on:true,  name:"Courier tracking sync",    price:"Included", d:"Pull the AWB back from Shiprocket and keep tracking live."},
@@ -549,13 +553,13 @@ const AUTOMATIONS = [
 ];
 
 const SEED_ORDERS = [
-  {id:"PF-2608-0139", who:"Ritu Malhotra",  city:"Pune",       cc:"IN", pid:"oak",    size:"12x16", stage:5, ph:0, day:"9 Aug",  awb:"DL8841207734"},
-  {id:"PF-2608-0140", who:"Faisal Rehman",  city:"Dubai",      cc:"AE", pid:"brass",  size:"16x20", stage:4, ph:1, day:"10 Aug", awb:"ARX2290114"},
-  {id:"PF-2608-0141", who:"Anita Chandran", city:"London",     cc:"GB", pid:"ivory",  size:"16x20", stage:3, ph:2, day:"10 Aug", awb:""},
-  {id:"PF-2608-0142", who:"Vikram Shetty",  city:"Bengaluru",  cc:"IN", pid:"walnut", size:"20x30", stage:2, ph:1, day:"11 Aug", awb:""},
-  {id:"PF-2608-0143", who:"Sana Qureshi",   city:"Abu Dhabi",  cc:"AE", pid:"teak",   size:"12x16", stage:1, ph:3, day:"11 Aug", awb:""},
-  {id:"PF-2608-0144", who:"Deepak Iyer",    city:"Toronto",    cc:"CA", pid:"black",  size:"8x10",  stage:0, ph:0, day:"12 Aug", awb:""},
-  {id:"PF-2608-0145", who:"Meera Nambiar",  city:"Kochi",      cc:"IN", pid:"oak",    size:"8x10",  stage:0, ph:2, day:"12 Aug", awb:""},
+  {id:"PF-2608-0139", who:"Ritu Malhotra",  city:"Pune",       cc:"MH", pid:"oak",    size:"12x16", stage:5, ph:0, day:"9 Aug",  awb:"DL8841207734"},
+  {id:"PF-2608-0140", who:"Faisal Rehman",  city:"Mumbai",     cc:"MH", pid:"brass",  size:"16x20", stage:4, ph:1, day:"10 Aug", awb:"DL2290114"},
+  {id:"PF-2608-0141", who:"Anita Chandran", city:"Bengaluru",  cc:"KA", pid:"ivory",  size:"16x20", stage:3, ph:2, day:"10 Aug", awb:""},
+  {id:"PF-2608-0142", who:"Vikram Shetty",  city:"New Delhi",  cc:"DL", pid:"walnut", size:"20x30", stage:2, ph:1, day:"11 Aug", awb:""},
+  {id:"PF-2608-0143", who:"Sana Qureshi",   city:"Hyderabad",  cc:"TS", pid:"teak",   size:"12x16", stage:1, ph:3, day:"11 Aug", awb:""},
+  {id:"PF-2608-0144", who:"Deepak Iyer",    city:"Ahmedabad",  cc:"GJ", pid:"black",  size:"8x10",  stage:0, ph:0, day:"12 Aug", awb:""},
+  {id:"PF-2608-0145", who:"Meera Nambiar",  city:"Kochi",      cc:"KL", pid:"oak",    size:"8x10",  stage:0, ph:2, day:"12 Aug", awb:""},
 ];
 
 /* ==========================================================================
@@ -847,9 +851,9 @@ function siteHeader(){
       return '<button data-go="'+n[0]+'" aria-current="'+(S.view===n[0])+'">'+n[1]+'</button>'}).join("")+
     '</nav>'+
     '<div class="grow"></div>'+
-    '<label class="ctrl" title="Prices and shipping update with the destination">'+
+    '<label class="ctrl" title="Prices and shipping update with the delivery state">'+
       '<span class="cc">'+c.cur+'</span>'+
-      '<select id="ccSel" aria-label="Delivery country">'+
+      '<select id="ccSel" aria-label="Delivery state">'+
         COUNTRIES.map(function(x){
           return '<option value="'+x.code+'"'+(x.code===S.cc?" selected":"")+(x.on?"":" disabled")+'>'+
             esc(x.name)+(x.on?"":" — unavailable")+'</option>'}).join("")+
@@ -861,7 +865,7 @@ function siteHeader(){
 
 function siteFooter(){
   return '<footer class="site-f"><div class="in">'+
-    '<span>Frame &amp; Co — handmade photo framing, Nashik. Shipping across India, the GCC and the NRI corridor.</span>'+
+    '<span>Frame &amp; Co — handmade photo framing, Nashik. Delivery across all Indian States &amp; Union Territories.</span>'+
     '<span>Prototype build · not a live store</span>'+
   '</div></footer>';
 }
@@ -876,10 +880,10 @@ function viewHome(){
     '<div class="tourbox"><div class="tx">'+
       '<h4>How to walk the client through this</h4>'+
       '<ol>'+
-        '<li>Pick a frame below, then change the country in the header — watch every price move.</li>'+
+        '<li>Pick a frame below, then change the state in the header — watch shipping &amp; delivery dates update.</li>'+
         '<li>Upload a photo (or tap a sample) and see it inside the frame, live.</li>'+
         '<li>Check out, then open <b>Shop admin</b> and advance that same order a stage.</li>'+
-        '<li>Try the <b>Pakistan</b> option in the country list, and the <b>1978 scan</b> sample.</li>'+
+        '<li>Try the <b>Lakshadweep Islands</b> option in the state list, and the <b>pincode blocker</b> in shop admin.</li>'+
       '</ol></div>'+
       '<button class="close" data-act="closeTour" aria-label="Dismiss">×</button></div>':"";
 
@@ -1098,7 +1102,7 @@ function viewCheckout(){
             (e.addr?'<span class="err">'+esc(e.addr)+'</span>':"")+'</div>'+
           fld("city","City","Mumbai")+
           fld("zip","Postcode","400050")+
-          '<div class="f full"><label for="f_cc2">Country</label>'+
+          '<div class="f full"><label for="f_cc2">State / Region</label>'+
             '<select id="f_cc2">'+COUNTRIES.map(function(x){
               return '<option value="'+x.code+'"'+(x.code===S.cc?" selected":"")+(x.on?"":" disabled")+'>'+
                 esc(x.name)+(x.on?"":" — "+esc(x.why))+'</option>'}).join("")+'</select></div>'+
@@ -1232,7 +1236,7 @@ function viewTrack(){
    6. ADMIN
    ========================================================================== */
 function viewAdmin(){
-  const tabs=[["orders","Orders"],["pricing","Country pricing"],["autos","Automations"],["dash","Dashboard"]];
+  const tabs=[["orders","Orders"],["pricing","State pricing"],["autos","Automations"],["dash","Dashboard"]];
   return '<div class="admin-bar"><div class="in">'+
       '<span class="bn">Frame &amp; Co<small>Shop admin</small></span>'+
       '<div class="admin-tabs">'+tabs.map(function(t){
@@ -1367,18 +1371,18 @@ function adminOrders(){
 
 function adminPricing(){
   return '<div class="stack gap4" style="margin-bottom:20px">'+
-      '<h2>Country pricing &amp; Pincode rules</h2>'+
-      '<p class="sub">Change rates, toggle country return policies, or block non-serviceable pincodes — updates take effect instantly.</p></div>'+
+      '<h2>State pricing &amp; Pincode rules</h2>'+
+      '<p class="sub">Change shipping rates per state, toggle state return policies, or block non-serviceable pincodes — updates take effect instantly.</p></div>'+
 
     '<div class="callout c-bad" style="margin-bottom:18px"><span class="ic">!</span><span>'+
-      '<b>Pakistan is configured but switched off.</b> India suspended bilateral trade in 2019 and postal exchange '+
-      'remains suspended, so no courier accepts consignments from India. The row stays here ready to enable if that changes. '+
-      'Try selecting it in the storefront country list.</span></div>'+
+      '<b>Lakshadweep Islands is configured but switched off.</b> No direct courier sea route is currently available. '+
+      'The row stays here ready to enable if courier service opens. '+
+      'Try selecting it in the storefront state list.</span></div>'+
 
-    '<div class="pane"><div class="pane-h"><h3>Destinations</h3>'+
+    '<div class="pane"><div class="pane-h"><h3>Destinations &amp; State Rates</h3>'+
       '<span class="note">'+COUNTRIES.filter(function(c){return c.on}).length+' of '+COUNTRIES.length+' enabled</span></div>'+
       '<div class="tscroll"><table class="dt">'+
-        '<thead><tr><th>Country</th><th>Currency</th><th class="r">Uplift</th><th class="r">Shipping</th>'+
+        '<thead><tr><th>State / Region</th><th>Currency</th><th class="r">Margin Uplift</th><th class="r">Shipping Fee</th>'+
           '<th class="r">8×10 sells at</th><th>Transit</th><th class="r">Non-returnable</th><th class="r">Enabled</th></tr></thead><tbody>'+
         COUNTRIES.map(function(c){
           const eg=priceOf(P("oak"),Z("8x10"),c.code);
@@ -1395,7 +1399,7 @@ function adminPricing(){
               (c.on?'aria-label="Toggle non-returnable for '+esc(c.name)+'"':'disabled')+
               '></button></td>'+
             '<td class="r"><button class="sw" data-toggle-cc="'+c.code+'" aria-pressed="'+c.on+'" '+
-              (c.code==="PK"?'disabled title="No courier route available from India"':'aria-label="Enable '+esc(c.name)+'"')+
+              (c.code==="LD"?'disabled title="No courier route available"':'aria-label="Enable '+esc(c.name)+'"')+
               '></button></td>'+
           '</tr>'}).join("")+
       '</tbody></table></div></div>'+
